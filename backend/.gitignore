@@ -1,0 +1,9 @@
+.venv_auth/
+__pycache__/
+include/
+Lib/
+Scripts/
+.env
+instance/
+share/
+pyvenv.cfg
