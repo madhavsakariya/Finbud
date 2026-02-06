@@ -24,7 +24,7 @@ dist-ssr
 *.sw?
 
 
-src/
+src/assets
 public/
 package-lock.json
 package.json
