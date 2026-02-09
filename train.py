@@ -30,7 +30,7 @@ print("="*70)
 CONFIG = {
     "model_name": "microsoft/phi-2",
     "dataset_path": "dataset.json",
-    "output_dir": "./models/finance_phi2_model",
+    "output_dir": "./models/finance_phi2_model_v2",
     "max_length": 256,
     "epochs": 3,
     "batch_size": 1,
@@ -143,7 +143,8 @@ training_args = TrainingArguments(
     lr_scheduler_type="cosine",
     warmup_steps=50,
     weight_decay=0.01,
-    fp16=True,
+    fp16=False,
+    bf16=True,
     logging_steps=5,
     logging_first_step=True,
     save_strategy="epoch",
