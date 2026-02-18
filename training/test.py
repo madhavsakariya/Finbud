@@ -6,7 +6,7 @@ import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from peft import PeftModel
 
-MODEL_DIR = "./models/finbud_stable"  # Path to your fine-tuned model directory
+MODEL_DIR = "./models/finbud_indian"  # Path to your fine-tuned model directory
 
 print("="*60)
 print("PHI-2 FINANCE MODEL - TEST")

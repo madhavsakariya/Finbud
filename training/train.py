@@ -25,10 +25,10 @@ print(f"✅ GPU: {torch.cuda.get_device_name(0)}")
 # Data
 print("\n[1/5] Loading data...")
 try:
-    with open("dataset.json", "r") as f:
+    with open("india_finance_dataset.json", "r", encoding='utf-8') as f:
         data = json.load(f)
 except:
-    with open("dataset.json", "r") as f:
+    with open("india_finance_dataset.json", encoding='utf-8') as f:
         data = json.load(f)
 
 print(f"✅ {len(data)} examples")
@@ -112,11 +112,11 @@ print("\n🚀 Training...")
 print("="*60)
 
 args = TrainingArguments(
-    output_dir="./models/finance_phi2_final",
-    num_train_epochs=5,  # More epochs
+    output_dir="./models/finbud_indian",
+    num_train_epochs=10,  # More epochs
     per_device_train_batch_size=1,  # Smaller batch
     gradient_accumulation_steps=8,  # More accumulation
-    learning_rate=1e-4,  # Lower LR for stability
+    learning_rate=2e-4,  # Lower LR for stability
     warmup_steps=20,  # More warmup
     max_grad_norm=0.5,  # Gradient clipping!
     logging_steps=2,
@@ -139,9 +139,9 @@ print(f"\n✅ TRAINING DONE!")
 print(f"   Final loss: {result.training_loss:.4f}")
 
 # Save
-model.save_pretrained("./models/finbud_stable")
-tokenizer.save_pretrained("./models/finbud_stable")
-print("✅ Saved: ./models/finbud_stable")
+model.save_pretrained("./models/finbud_indian")
+tokenizer.save_pretrained("./models/finbud_indian")
+print("✅ Saved: ./models/finbud_indian")
 
 # Test with SAFE generation settings
 print("\n🧪 Testing...")

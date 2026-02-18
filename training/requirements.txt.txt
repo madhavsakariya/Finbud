@@ -1,0 +1,20 @@
+
+
+# PyTorch with CUDA 11.8
+torch==2.1.0
+torchvision==0.16.0
+torchaudio==2.1.0
+
+# ML Libraries
+transformers==4.35.2
+peft==0.6.2
+accelerate==0.24.1
+datasets==2.14.0
+sentencepiece==0.1.99
+
+# Optional (if needed for API integration later)
+# flask==3.0.0
+# flask-cors==4.0.0
+
+# Install PyTorch separately with:
+# pip install torch==2.1.0 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
