@@ -8,6 +8,7 @@ function Navbar() {
   const navigate = useNavigate()
 
   const handleLogout = () => {
+    sessionStorage.removeItem('chat_messages')
     logout()
     navigate('/login')
   }
