@@ -1,0 +1,43 @@
+INCOME TAX INDIA 2024-25
+
+New Tax Regime Slabs:
+- Up to Rs 3,00,000: No tax
+- Rs 3,00,001 to Rs 6,00,000: 5%
+- Rs 6,00,001 to Rs 9,00,000: 10%
+- Rs 9,00,001 to Rs 12,00,000: 15%
+- Rs 12,00,001 to Rs 15,00,000: 20%
+- Above Rs 15,00,000: 30%
+
+Old Tax Regime Slabs:
+- Up to Rs 2,50,000: No tax
+- Rs 2,50,001 to Rs 5,00,000: 5%
+- Rs 5,00,001 to Rs 10,00,000: 20%
+- Above Rs 10,00,000: 30%
+
+Standard Deduction:
+- Rs 50,000 for salaried individuals in both regimes.
+
+Section 80C Deductions (Old Regime only):
+- Maximum limit: Rs 1,50,000 per year
+- Eligible investments: PPF, ELSS, NSC, LIC premium, EPF, home loan principal, Sukanya Samriddhi Yojana, 5-year FD
+
+Section 80D - Health Insurance:
+- Self and family: up to Rs 25,000
+- Senior citizen parents: additional Rs 50,000
+- Maximum total: Rs 75,000
+
+TDS on Fixed Deposit Interest:
+- TDS deducted if interest exceeds Rs 40,000/year (Rs 50,000 for senior citizens)
+- TDS rate: 10% if PAN provided, 20% if PAN not provided
+- Submit Form 15G (below 60 years) or 15H (senior citizens) to avoid TDS if total income is below taxable limit
+
+Capital Gains Tax:
+- Short Term Capital Gains (STCG) on equity: 15% if held less than 1 year
+- Long Term Capital Gains (LTCG) on equity: 10% on gains above Rs 1,00,000 if held more than 1 year
+- Debt fund gains taxed as per income tax slab
+
+HRA Exemption:
+- Least of the following is exempt:
+  1. Actual HRA received
+  2. 50% of salary (metro cities) or 40% (non-metro)
+  3. Actual rent paid minus 10% of salary

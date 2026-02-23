@@ -1,0 +1,47 @@
+MUTUAL FUNDS IN INDIA
+
+Types of Mutual Funds:
+- Equity Funds: Invest in stocks. High risk, high return. Best for 5+ year goals.
+- Debt Funds: Invest in bonds and government securities. Low risk, stable returns. Best for 1-3 year goals.
+- Hybrid Funds: Mix of equity and debt. Medium risk. Good for 3-5 year goals.
+- Index Funds: Track Nifty 50 or Sensex. Low cost, passive. Good for long term.
+- Liquid Funds: Very short term debt funds. Safe alternative to savings account for emergency fund.
+
+SIP - Systematic Investment Plan:
+- Invest fixed amount every month in a mutual fund
+- Minimum SIP amount: Rs 500/month in most funds
+- Benefits: Rupee cost averaging, disciplined investing, no need to time market
+- Best for: Long term wealth creation, retirement planning
+
+ELSS - Equity Linked Savings Scheme:
+- Tax saving mutual fund under Section 80C
+- Lock-in period: 3 years (shortest among all 80C options)
+- Returns: Market linked, historically 12-15% per year
+- Risk: High (equity market linked)
+
+PPF - Public Provident Fund:
+- Government backed, completely safe
+- Current interest rate: 7.1% per year (compounded annually)
+- Lock-in: 15 years (partial withdrawal allowed after 7 years)
+- Tax: EEE status (Exempt at investment, Exempt on interest, Exempt on maturity)
+- Maximum investment: Rs 1,50,000 per year
+- Minimum investment: Rs 500 per year
+
+NPS - National Pension System:
+- Retirement savings scheme by government
+- Additional tax deduction: Rs 50,000 under Section 80CCD(1B) over and above 80C limit
+- Returns: Market linked, mix of equity and debt
+- Withdrawal: 60% lump sum at retirement, 40% must be used to buy annuity
+
+Fixed Deposits:
+- Safe, guaranteed returns
+- Interest rates: 6.5% to 8% depending on bank and tenure
+- Senior citizens get 0.25% to 0.5% extra interest
+- TDS applicable on interest above Rs 40,000/year
+
+Stocks and Equity:
+- Listed on BSE (Bombay Stock Exchange) and NSE (National Stock Exchange)
+- Nifty 50: Top 50 companies by market cap on NSE
+- Sensex: Top 30 companies on BSE
+- Demat account required to invest in stocks
+- Long term investing recommended over trading for beginners

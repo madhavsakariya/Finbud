@@ -1,0 +1,53 @@
+BANKING AND SAVINGS IN INDIA
+
+Savings Account Interest Rates:
+- Most banks offer 2.5% to 4% per year on savings accounts
+- Small finance banks offer up to 7% on savings accounts
+- Interest above Rs 10,000 per year is taxable
+
+RBI Guidelines:
+- RBI (Reserve Bank of India) is the central bank of India
+- Repo rate: Rate at which RBI lends to banks (affects home loan and FD rates)
+- When repo rate increases, loan EMIs increase and FD rates improve
+- When repo rate decreases, loan EMIs decrease and FD rates fall
+
+DICGC Insurance:
+- All bank deposits insured up to Rs 5,00,000 per bank per depositor
+- Covers savings, FD, RD, current accounts
+- Provided by Deposit Insurance and Credit Guarantee Corporation
+
+Home Loans:
+- Interest rates: 8.5% to 10.5% per year currently
+- Maximum tenure: 30 years
+- Tax benefit: Principal repayment under 80C (up to Rs 1.5 lakh), interest under Section 24 (up to Rs 2 lakh)
+- PMAY subsidy available for first time home buyers under certain income criteria
+
+Personal Loans:
+- Interest rates: 10% to 24% per year
+- No collateral required
+- Tenure: 1 to 5 years
+- Avoid for investments, use only for emergencies
+
+Credit Cards:
+- Pay full outstanding every month to avoid interest
+- Interest on unpaid balance: 36% to 48% per year (very high)
+- Credit score (CIBIL) affected by payment history
+- Ideal credit utilization: below 30% of credit limit
+
+Emergency Fund:
+- Keep 3 to 6 months of expenses in liquid, safe investments
+- Best options: Savings account, liquid mutual funds, short term FD
+- Never invest emergency fund in stocks or equity mutual funds
+
+CIBIL Score:
+- Credit score ranging from 300 to 900
+- Above 750: Excellent, easy loan approval at best rates
+- 650 to 750: Good, most loans approved
+- Below 650: Poor, loan rejection likely or high interest rates
+- Improve by: Paying EMIs on time, keeping credit utilization low, not applying for multiple loans at once
+
+UPI and Digital Payments:
+- UPI limit: Rs 1,00,000 per transaction (Rs 2,00,000 for certain categories)
+- IMPS: Instant transfer up to Rs 5,00,000
+- NEFT: Settled in batches, no limit
+- RTGS: For amounts above Rs 2,00,000, real time settlement
