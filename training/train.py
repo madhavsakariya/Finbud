@@ -74,9 +74,9 @@ print(f"✅ Using {len(targets)} layers: {targets}")
 # LoRA with MORE capacity
 print("\n[4/5] Adding LoRA...")
 config = LoraConfig(
-    r=16,  # Increased from 8
-    lora_alpha=32,  # Increased from 16
-    target_modules=targets,  # Multiple layers!
+    r=32,          # increased from 16
+    lora_alpha=64, # increased from 32
+    target_modules=targets,
     lora_dropout=0.05,
     task_type="CAUSAL_LM"
 )
@@ -90,7 +90,7 @@ print("\n[5/5] Preparing data...")
 
 def format_data(examples):
     if 'question' in examples:
-        texts = [f"Q: {q}\nA: {a}" for q, a in zip(examples['instruction'], examples['output'])]
+        texts = [f"Q: {i}\nA: {o}" for i, o in zip(examples['instruction'], examples['output'])]
     else:
         texts = [f"Q: {i}\nA: {o}" for i, o in zip(examples['instruction'], examples['output'])]
     return {"text": texts}
@@ -113,15 +113,16 @@ print("="*60)
 
 args = TrainingArguments(
     output_dir="./models/finbud_indian",
-    num_train_epochs=10,  # More epochs
-    per_device_train_batch_size=1,  # Smaller batch
-    gradient_accumulation_steps=8,  # More accumulation
-    learning_rate=2e-4,  # Lower LR for stability
-    warmup_steps=20,  # More warmup
-    max_grad_norm=0.5,  # Gradient clipping!
+    num_train_epochs=15,
+    per_device_train_batch_size=2,
+    gradient_accumulation_steps=4,
+    learning_rate=1e-4,
+    warmup_steps=50,
+    max_grad_norm=0.5,
     logging_steps=2,
     save_strategy="no",
     fp16=False,
+    bf16=True,
     report_to="none"
 )
 
