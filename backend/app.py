@@ -1,14 +1,14 @@
 """
-FinBud Backend - Upgraded with RAG + Feedback + Chat History
+FinBud Backend - FIXED to match test.py format
 """
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
+from peft import PeftModel
 import sqlite3
 import os
-import time
 
 app = Flask(__name__)
 CORS(app)
@@ -16,6 +16,7 @@ CORS(app)
 model = None
 tokenizer = None
 
+# FIXED: Use correct path for Llama-2 model (or change to Phi-2 if you trained Phi-2)
 MODEL_PATH = r"D:\Finbud\training\models\finbud_indian"
 
 # ─────────────────────────────────────────────
@@ -46,7 +47,7 @@ def init_db():
             user_id TEXT,
             question TEXT,
             answer TEXT,
-            rating INTEGER,  -- 1 = thumbs up, 0 = thumbs down
+            rating INTEGER,
             timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
         )
     """)
@@ -89,7 +90,6 @@ def get_recent_history(user_id, limit=4):
     )
     rows = cursor.fetchall()
     conn.close()
-    # Reverse so oldest is first
     return list(reversed(rows))
 
 
@@ -109,10 +109,8 @@ def load_rag():
     index_path = "rag/finance_index.faiss"
     store_path = "rag/documents_store.pkl"
 
-    # If no documents folder, skip RAG silently
     if not os.path.exists(docs_folder):
         print("⚠️  No rag/documents folder found. RAG disabled.")
-        print("   Create rag/documents/ and add .txt files to enable it.")
         return
 
     try:
@@ -121,17 +119,14 @@ def load_rag():
         import numpy as np
         from sentence_transformers import SentenceTransformer
 
-        # Build index if it doesn't exist yet
         if not os.path.exists(index_path):
             print("\n📚 Building RAG index from documents...")
             build_rag_index(docs_folder, index_path, store_path)
 
-        # Load index and documents
         print("📖 Loading RAG index...")
         rag_index = faiss.read_index(index_path)
 
         with open(store_path, "rb") as f:
-            import pickle
             store = pickle.load(f)
         rag_documents.extend(store["documents"])
 
@@ -156,7 +151,6 @@ def build_rag_index(docs_folder, index_path, store_path):
             filepath = os.path.join(docs_folder, filename)
             with open(filepath, "r", encoding="utf-8") as f:
                 content = f.read()
-            # Split into chunks of ~150 words
             words = content.split()
             for i in range(0, len(words), 150):
                 chunk = " ".join(words[i:i+150])
@@ -175,10 +169,10 @@ def build_rag_index(docs_folder, index_path, store_path):
 
     print(f"✅ Index built! {len(documents)} chunks indexed.")
 
-def retrieve_context(query, top_k=3):
+def retrieve_context(query, top_k=2):
     """Find relevant finance info for the query"""
     if rag_index is None or embedding_model is None:
-        return ""  # No RAG available, return empty
+        return ""
 
     import numpy as np
 
@@ -196,7 +190,7 @@ def retrieve_context(query, top_k=3):
 
 
 # ─────────────────────────────────────────────
-# MODEL SETUP
+# MODEL SETUP - FIXED
 # ─────────────────────────────────────────────
 
 def load_model():
@@ -206,39 +200,51 @@ def load_model():
         return
 
     print("\n" + "="*60)
-    print("📄 Loading Phi-2 Model...")
+    print("📄 Loading Model...")
     print("="*60)
 
     try:
-        try:
-            model = AutoModelForCausalLM.from_pretrained(
-                MODEL_PATH,
-                torch_dtype=torch.float16,
-                device_map="cuda",
-                trust_remote_code=True
-            )
-            tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH, trust_remote_code=True)
-            print("✅ Loaded complete model!")
+        # Check what model was actually trained
+        import json
+        config_path = os.path.join(MODEL_PATH, "adapter_config.json")
+        
+        if os.path.exists(config_path):
+            with open(config_path, 'r') as f:
+                config = json.load(f)
+            # Update the fallback value here
+            base_model_name = config.get('base_model_name_or_path', 'microsoft/phi-2')
+            print(f"   Detected base model: {base_model_name}")
+        else:
+            # Update the default fallback here
+            base_model_name = "microsoft/phi-2"
+            print(f"   No config found, assuming: {base_model_name}")
 
-        except Exception as e1:
-            print(f"   Attempt 1 failed: {e1}")
-            print("\nAttempt 2: Loading base + LoRA adapter...")
-            from peft import PeftModel
+        # Load base model
+        print(f"   Loading base model: {base_model_name}...")
+        base = AutoModelForCausalLM.from_pretrained(
+            base_model_name,
+            torch_dtype=torch.float16,
+            device_map="auto",
+            trust_remote_code=True,
+            low_cpu_mem_usage=True
+        )
 
-            base = AutoModelForCausalLM.from_pretrained(
-                "microsoft/phi-2",
-                torch_dtype=torch.float16,
-                device_map="auto",
-                trust_remote_code=True,
-                use_flash_attention_2=False
-            )
-            model = PeftModel.from_pretrained(base, MODEL_PATH)
-            tokenizer = AutoTokenizer.from_pretrained("microsoft/phi-2", trust_remote_code=True)
-            print("✅ Loaded with LoRA adapter!")
-
+        # Load LoRA adapter
+        print(f"   Loading LoRA adapter from: {MODEL_PATH}...")
+        model = PeftModel.from_pretrained(base, MODEL_PATH)
+        
+        # Merge for faster inference
+        print("   Merging LoRA weights...")
+        model = model.merge_and_unload()
         model.eval()
-        tokenizer.pad_token = tokenizer.eos_token
-        print("\n✅ Model READY!\n")
+
+        # Load tokenizer
+        tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH, trust_remote_code=True)
+        if tokenizer.pad_token is None:
+            tokenizer.pad_token = tokenizer.eos_token
+
+        print("\n✅ Model READY!")
+        print(f"   GPU Memory: {torch.cuda.memory_allocated() / 1024**3:.2f} GB\n")
 
     except Exception as e:
         print(f"\n❌ Model load error: {e}")
@@ -248,30 +254,34 @@ def load_model():
 
 
 # ─────────────────────────────────────────────
-# GENERATION
+# GENERATION - FIXED to match test.py format
 # ─────────────────────────────────────────────
 
 def generate(question, user_id="anonymous"):
     if model is None:
         return "Model is still loading, please wait...", None
 
-    # 1. Get relevant context from RAG
-    context = retrieve_context(question,top_k=1)
+    # 1. Get relevant context from RAG (optional)
+    context = retrieve_context(question, top_k=2)
 
-    # 2. Get recent chat history for memory
-    history = get_recent_history(user_id,limit=2)
-
+    # 2. Build prompt in EXACT SAME FORMAT as test.py
+    # CRITICAL: This must match your training format!
+    
     if context:
-        prompt = f"""Q: {context} Based on this, {question}
-        A:"""
+        # If RAG context available, include it
+        prompt = f"Instruction: Based on the following information: {context}\n\nAnswer this question: {question}\nResponse:"
     else:
-        prompt = f"""Q: {question}
-        A:"""
+        # Simple format - MATCHES test.py
+        prompt = f"Instruction: {question}\nResponse:"
 
-    # 5. Generate response
+    print(f"\n🔍 Prompt being sent:\n{prompt}\n")  # Debug logging
+
+    # 3. Tokenize
     inputs = tokenizer(prompt, return_tensors="pt", truncation=True, max_length=512).to(model.device)
-    input_length = inputs["input_ids"].shape[1]  # count how many tokens the prompt is
 
+    # 4. Generate
+    torch.cuda.empty_cache()
+    
     with torch.no_grad():
         outputs = model.generate(
             **inputs,
@@ -279,14 +289,21 @@ def generate(question, user_id="anonymous"):
             do_sample=True,
             temperature=0.7,
             top_p=0.9,
-            repetition_penalty=1.1
+            repetition_penalty=1.1,
+            pad_token_id=tokenizer.pad_token_id,
+            eos_token_id=tokenizer.eos_token_id
         )
 
-    # Only decode the NEW tokens the model generated, skip the prompt tokens
-    new_tokens = outputs[0][input_length:]
+    # 5. Decode - FIXED to match test.py approach
+    full_response = tokenizer.decode(outputs[0], skip_special_tokens=True)
     
-    response = tokenizer.decode(new_tokens, skip_special_tokens=True).strip()
+    # Extract only the answer part after "Response:"
+    if "Response:" in full_response:
+        response = full_response.split("Response:")[-1].strip()
+    else:
+        response = full_response.strip()
 
+    print(f"💬 Generated response:\n{response}\n")  # Debug logging
 
     # 6. Save to database
     chat_id = save_chat(user_id, question, response)
@@ -302,7 +319,7 @@ def generate(question, user_id="anonymous"):
 def chat():
     data = request.json
     question = data.get('question', '')
-    user_id = data.get('user_id', 'anonymous')  # frontend should send user ID
+    user_id = data.get('user_id', 'anonymous')
 
     if not question:
         return jsonify({'error': 'No question provided'}), 400
@@ -311,7 +328,7 @@ def chat():
 
     return jsonify({
         'answer': answer,
-        'chat_id': chat_id  # frontend needs this for feedback
+        'chat_id': chat_id
     })
 
 
@@ -323,7 +340,7 @@ def feedback():
     user_id = data.get('user_id', 'anonymous')
     question = data.get('question')
     answer = data.get('answer')
-    rating = data.get('rating')  # 1 = 👍, 0 = 👎
+    rating = data.get('rating')
 
     if rating is None or chat_id is None:
         return jsonify({'error': 'Missing chat_id or rating'}), 400
@@ -365,13 +382,15 @@ def health():
 if __name__ == '__main__':
     print(f"\n🔍 GPU Available: {torch.cuda.is_available()}")
     if torch.cuda.is_available():
-        print(f"   {torch.cuda.get_device_name(0)}")
+        print(f"   GPU: {torch.cuda.get_device_name(0)}")
+        print(f"   VRAM: {torch.cuda.get_device_properties(0).total_memory / 1024**3:.1f} GB")
     else:
         print("   ⚠️  No GPU! Will be slow on CPU")
 
-    init_db()      # Setup database tables
-    load_rag()     # Load RAG (optional, works without it)
-    load_model()   # Load Phi-2
+    init_db()
+    load_rag()
+    load_model()
 
     print("\n🚀 FinBud Server running at http://localhost:5000")
+    print("="*60)
     app.run(port=5000, debug=False)

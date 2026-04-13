@@ -30,9 +30,11 @@ model.eval()
 print("✓ Model loaded")
 
 test_prompts = [
-    "Instruction: What is compound interest?\nResponse:",
-    "Instruction: How can I start investing?\nResponse:",
-    "Instruction: What is a budget?\nResponse:",
+    # "Instruction: What is compound interest?\nResponse:",
+    # "Instruction: How can I start investing?\nResponse:",
+    # "Instruction: What is a budget?\nResponse:",
+    "Instruction: What is a finance?\nResponse:",
+
 ]
 
 print("\n[2/3] Running inference tests...\n")
