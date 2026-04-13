@@ -1,83 +1,125 @@
-import { Link, useNavigate } from 'react-router-dom'
-import { DollarSign, Home, MessageCircle, BookOpen, Calculator, Info, Mail, LogIn, LogOut, User } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { TrendingUp, Menu, X, LogOut, User, ChevronDown } from 'lucide-react'
 import './navbar.css'
 
-function Navbar() {
-  const { user, isAuthenticated, logout } = useAuth()
+export default function Navbar() {
+  const { user, logout, isAuthenticated } = useAuth()
+  const location = useLocation()
   const navigate = useNavigate()
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const [userMenu, setUserMenu] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20)
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => { setMenuOpen(false); setUserMenu(false) }, [location])
 
   const handleLogout = () => {
     sessionStorage.removeItem('chat_messages')
     logout()
-    navigate('/login')
+    navigate('/')
   }
 
-  return (
-    <nav className="navbar">
-      <div className="navbar-content">
-        <Link to="/" className="navbar-logo">
-          <DollarSign className="navbar-logo-icon" />
-          <span>FinBud AI</span>
-        </Link>
-        
-        <div className="navbar-links">
-          <Link to="/" className="navbar-link">
-            <Home size={18} />
-            <span>Home</span>
-          </Link>
-          
-          {isAuthenticated() && (
-            <>
-              <Link to="/chat" className="navbar-link">
-                <MessageCircle size={18} />
-                <span>AI Chat</span>
-              </Link>
-              <Link to="/learn" className="navbar-link">
-                <BookOpen size={18} />
-                <span>Learn</span>
-              </Link>
-              <Link to="/tools" className="navbar-link">
-                <Calculator size={18} />
-                <span>Tools</span>
-              </Link>
-            </>
-          )}
-          
-          <Link to="/about" className="navbar-link">
-            <Info size={18} />
-            <span>About</span>
-          </Link>
-          
-          
-            <Link to="/contact" className="navbar-link">
-              <Mail size={18} />
-              <span>Contact</span>
-            </Link>
-          
+  const isActive = (path) => location.pathname === path
 
-          {/* Auth Buttons */}
+  const navLinks = [
+    { to: '/', label: 'Home' },
+    { to: '/about', label: 'About' },
+    { to: '/learn', label: 'Learn' },
+    { to: '/tools', label: 'Tools' },
+    { to: '/contact', label: 'Contact' },
+    ...(isAuthenticated() ? [{ to: '/chat', label: 'Chat' }] : []),
+  ]
+
+  return (
+    <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
+      <div className="navbar-inner">
+        {/* Logo */}
+        <Link to="/" className="navbar-logo">
+          <div className="navbar-logo-icon">
+            <TrendingUp size={18} />
+          </div>
+          <span className="navbar-logo-text">FinBud <span className="navbar-logo-ai">AI</span></span>
+        </Link>
+
+        {/* Desktop Nav */}
+        <div className="navbar-links">
+          {navLinks.map(({ to, label }) => (
+            <Link key={to} to={to} className={`navbar-link ${isActive(to) ? 'active' : ''}`}>
+              {label}
+            </Link>
+          ))}
+        </div>
+
+        {/* Right side */}
+        <div className="navbar-right">
           {isAuthenticated() ? (
-            <div className="navbar-user">
-              <div className="navbar-user-info">
-                <User size={18} />
-                <span>{user?.name || user?.email}</span>
-              </div>
-              <button onClick={handleLogout} className="navbar-logout">
-                <LogOut size={18} />
-                <span>Logout</span>
+            <div className="user-menu-wrap">
+              <button className="user-menu-btn" onClick={() => setUserMenu(!userMenu)}>
+                <div className="user-avatar-small">
+                  {user?.name?.charAt(0)?.toUpperCase() || 'U'}
+                </div>
+                <span className="user-name-short">{user?.name?.split(' ')[0]}</span>
+                <ChevronDown size={14} className={`chevron ${userMenu ? 'open' : ''}`} />
               </button>
+              {userMenu && (
+                <div className="user-dropdown">
+                  <div className="user-dropdown-header">
+                    <div className="user-dropdown-avatar">
+                      {user?.name?.charAt(0)?.toUpperCase() || 'U'}
+                    </div>
+                    <div>
+                      <div className="user-dropdown-name">{user?.name}</div>
+                      <div className="user-dropdown-email">{user?.email}</div>
+                    </div>
+                  </div>
+                  <div className="user-dropdown-divider" />
+                  <button className="user-dropdown-item logout" onClick={handleLogout}>
+                    <LogOut size={15} />
+                    Sign Out
+                  </button>
+                </div>
+              )}
             </div>
           ) : (
-            <Link to="/login" className="navbar-login">
-              <LogIn size={18} />
-              <span>Login</span>
-            </Link>
+            <div className="navbar-auth">
+              <Link to="/login" className="navbar-login">Sign In</Link>
+              <Link to="/signup" className="navbar-signup">Get Started</Link>
+            </div>
           )}
+
+          {/* Mobile toggle */}
+          <button className="navbar-mobile-btn" onClick={() => setMenuOpen(!menuOpen)}>
+            {menuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
         </div>
+      </div>
+
+      {/* Mobile menu */}
+      <div className={`navbar-mobile ${menuOpen ? 'open' : ''}`}>
+        {navLinks.map(({ to, label }) => (
+          <Link key={to} to={to} className={`mobile-link ${isActive(to) ? 'active' : ''}`}>
+            {label}
+          </Link>
+        ))}
+        <div className="mobile-divider" />
+        {isAuthenticated() ? (
+          <button className="mobile-logout" onClick={handleLogout}>
+            <LogOut size={16} /> Sign Out
+          </button>
+        ) : (
+          <div className="mobile-auth">
+            <Link to="/login" className="mobile-login">Sign In</Link>
+            <Link to="/signup" className="mobile-signup">Get Started</Link>
+          </div>
+        )}
       </div>
     </nav>
   )
 }
-
-export default Navbar
