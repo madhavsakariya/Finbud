@@ -30,11 +30,12 @@ export default function Navbar() {
 
   const navLinks = [
     { to: '/', label: 'Home' },
+    ...(isAuthenticated() ? [{ to: '/chat', label: 'Chat' }] : []),
     { to: '/about', label: 'About' },
     { to: '/learn', label: 'Learn' },
     { to: '/tools', label: 'Tools' },
     { to: '/contact', label: 'Contact' },
-    ...(isAuthenticated() ? [{ to: '/chat', label: 'Chat' }] : []),
+    
   ]
 
   return (

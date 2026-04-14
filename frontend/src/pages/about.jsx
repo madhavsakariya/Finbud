@@ -1,143 +1,153 @@
-import { Target, Users, Zap, Shield, Heart, Award } from 'lucide-react'
+import { useEffect } from 'react'
+import { Target, Users, Zap, Shield, Heart, Award, ArrowRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import './about.css'
 
+function useScrollReveal() {
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('visible')
+      }),
+      { threshold: 0.12 }
+    )
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right')
+      .forEach(el => observer.observe(el))
+    return () => observer.disconnect()
+  }, [])
+}
+
 function About() {
+  useScrollReveal()
+
+  const values = [
+    { icon: <Shield />, title: 'Trust & Transparency', body: 'Honest, unbiased financial guidance with no hidden agendas or product pushing. Your interest always comes first.', color: '#1a3a28' },
+    { icon: <Users />, title: 'Accessible to All', body: 'Financial advice should not be a luxury. Our AI is free and available 24/7 for every Indian regardless of income.', color: '#245235' },
+    { icon: <Zap />, title: 'Instant Answers', body: 'No appointments, no waiting. Get expert-level answers to your financial questions in seconds, any time.', color: '#2d6a42' },
+    { icon: <Heart />, title: 'Indian Context', body: 'Built specifically for Indian users with deep knowledge of PPF, EPF, NPS, ELSS, and Indian income tax laws.', color: '#3a8a55' },
+    { icon: <Award />, title: 'Quality First', body: 'Trained on verified Indian financial knowledge to provide accurate, reliable, and up-to-date information.', color: '#52a86e' },
+    { icon: <Zap />, title: 'Continuous Learning', body: 'Our AI improves with every interaction, staying current with the latest financial regulations and market trends.', color: '#c9a84c' },
+  ]
+
+  const steps = [
+    { n: '01', title: 'Ask Your Question', body: 'Type any financial question in plain language — from basic budgeting to complex tax planning.' },
+    { n: '02', title: 'AI Processes', body: 'Our model, trained on extensive Indian finance data, analyses your question and retrieves relevant context instantly.' },
+    { n: '03', title: 'Get Clear Answers', body: 'Receive detailed, easy-to-understand explanations with specific numbers tailored to India.' },
+    { n: '04', title: 'Take Action', body: 'Use our calculators and tools to plan your financial future with full confidence.' },
+  ]
+
+  const stats = [
+    { number: '1000+', label: 'Questions Answered' },
+    { number: '50+', label: 'Finance Topics' },
+    { number: '24/7', label: 'Always Available' },
+    { number: '100%', label: 'Free Forever' },
+  ]
+
   return (
     <div className="about">
-      {/* Hero Section */}
+
+      {/* ── HERO ─────────────────────────────────────────── */}
       <section className="about-hero">
+        <div className="about-hero-grain" />
+        <div className="about-hero-orb" />
         <div className="about-hero-content">
+          <div className="about-eyebrow">Our Story</div>
           <h1>About FinBud AI</h1>
-          <p>Empowering Indians to make smarter financial decisions through AI-powered guidance</p>
+          <p>Empowering Indians to make smarter financial decisions through AI-powered guidance — free, honest, and always available.</p>
         </div>
       </section>
 
-      {/* Mission Section */}
+      {/* ── MISSION ──────────────────────────────────────── */}
       <section className="mission-section">
         <div className="mission-content">
-          <div className="mission-text">
-            <h2>Our Mission</h2>
-            <p>
-              FinBud AI was created with a simple mission: to democratize financial knowledge 
-              and make professional-level financial advice accessible to every Indian, regardless 
-              of their background or income level.
-            </p>
-            <p>
-              We believe that financial literacy is the key to economic empowerment. With rising 
-              costs, complex investment options, and an ever-changing financial landscape, 
-              Indians need a trusted companion to help navigate their financial journey.
-            </p>
+          <div className="mission-text reveal-left">
+            <div className="about-section-eyebrow">Our Purpose</div>
+            <h2>Why We Built FinBud</h2>
+            <p>FinBud AI was created with a simple mission — to democratize financial knowledge and make professional-level financial advice accessible to every Indian, regardless of their background or income level.</p>
+            <p>We believe financial literacy is the key to economic empowerment. With rising costs, complex investment options, and an ever-changing financial landscape, Indians need a trusted companion to help navigate their financial journey.</p>
+            <Link to="/chat" className="about-cta-inline">
+              Start Chatting <ArrowRight size={16} />
+            </Link>
           </div>
-          <div className="mission-icon">
-            <Target size={200} />
+          <div className="mission-visual reveal-right">
+            <div className="mission-card">
+              <div className="mission-card-icon"><Target size={40} /></div>
+              <h3>Our Mission</h3>
+              <p>Make expert Indian financial guidance free, instant, and accessible to every person in India.</p>
+            </div>
+            <div className="mission-card mission-card-accent">
+              <div className="mission-card-icon gold"><Heart size={40} /></div>
+              <h3>Our Promise</h3>
+              <p>No commissions, no product pushing, no sponsored advice. Just honest, accurate financial information.</p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Values Section */}
+      {/* ── VALUES ───────────────────────────────────────── */}
       <section className="values-section">
-        <h2 className="section-title">Our Core Values</h2>
-        <div className="values-grid">
-          <div className="value-card">
-            <div className="value-icon" style={{background: '#667eea'}}>
-              <Shield />
-            </div>
-            <h3>Trust & Transparency</h3>
-            <p>We provide honest, unbiased financial guidance with no hidden agendas or product pushing.</p>
+        <div className="values-inner">
+          <div className="reveal" style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <div className="about-section-eyebrow center">What We Stand For</div>
+            <h2 className="about-section-title">Our Core Values</h2>
           </div>
-          <div className="value-card">
-            <div className="value-icon" style={{background: '#f093fb'}}>
-              <Users />
-            </div>
-            <h3>Accessible to All</h3>
-            <p>Financial advice shouldn't be a luxury. Our AI is free and available 24/7 for everyone.</p>
-          </div>
-          <div className="value-card">
-            <div className="value-icon" style={{background: '#43e97b'}}>
-              <Zap />
-            </div>
-            <h3>Instant Answers</h3>
-            <p>No appointments, no waiting. Get expert-level answers to your questions in seconds.</p>
-          </div>
-          <div className="value-card">
-            <div className="value-icon" style={{background: '#4facfe'}}>
-              <Heart />
-            </div>
-            <h3>Indian Context</h3>
-            <p>Built specifically for Indian users with context on PPF, EPF, NPS, and Indian tax laws.</p>
-          </div>
-          <div className="value-card">
-            <div className="value-icon" style={{background: '#fa709a'}}>
-              <Award />
-            </div>
-            <h3>Quality First</h3>
-            <p>Trained on verified financial knowledge to provide accurate, reliable information.</p>
-          </div>
-          <div className="value-card">
-            <div className="value-icon" style={{background: '#764ba2'}}>
-              <Zap />
-            </div>
-            <h3>Continuous Learning</h3>
-            <p>Our AI constantly improves to serve you better and stay updated with financial trends.</p>
+          <div className="values-grid">
+            {values.map((v, i) => (
+              <div key={i} className="value-card reveal" style={{ transitionDelay: `${i * 0.08}s` }}>
+                <div className="value-icon" style={{ background: v.color }}>
+                  {v.icon}
+                </div>
+                <h3>{v.title}</h3>
+                <p>{v.body}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* How It Works */}
+      {/* ── HOW IT WORKS ─────────────────────────────────── */}
       <section className="how-it-works">
-        <h2 className="section-title">How FinBud AI Works</h2>
-        <div className="steps-container">
-          <div className="step">
-            <div className="step-number">1</div>
-            <h3>Ask Your Question</h3>
-            <p>Type any financial question in natural language - from basic budgeting to complex investments.</p>
+        <div className="how-inner">
+          <div className="reveal" style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
+            <div className="about-section-eyebrow center">Simple Process</div>
+            <h2 className="about-section-title">How FinBud AI Works</h2>
           </div>
-          <div className="step">
-            <div className="step-number">2</div>
-            <h3>AI Processes</h3>
-            <p>Our AI model, trained on extensive financial knowledge, analyzes your question instantly.</p>
-          </div>
-          <div className="step">
-            <div className="step-number">3</div>
-            <h3>Get Clear Answers</h3>
-            <p>Receive detailed, easy-to-understand explanations tailored to the Indian financial context.</p>
-          </div>
-          <div className="step">
-            <div className="step-number">4</div>
-            <h3>Take Action</h3>
-            <p>Use our calculators and tools to plan your financial future with confidence.</p>
+          <div className="steps-container">
+            {steps.map((s, i) => (
+              <div key={i} className="step-card reveal" style={{ transitionDelay: `${i * 0.1}s` }}>
+                <div className="step-num">{s.n}</div>
+                <h3>{s.title}</h3>
+                <p>{s.body}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="stats-section">
-        <div className="stats-grid">
-          <div className="stat-box">
-            <div className="stat-number">1000+</div>
-            <div className="stat-label">Questions Answered</div>
-          </div>
-          <div className="stat-box">
-            <div className="stat-number">50+</div>
-            <div className="stat-label">Finance Topics Covered</div>
-          </div>
-          <div className="stat-box">
-            <div className="stat-number">24/7</div>
-            <div className="stat-label">Always Available</div>
-          </div>
-          <div className="stat-box">
-            <div className="stat-number">100%</div>
-            <div className="stat-label">Free Forever</div>
-          </div>
+      {/* ── STATS ────────────────────────────────────────── */}
+      <section className="about-stats">
+        <div className="about-stats-inner">
+          {stats.map((s, i) => (
+            <div key={i} className="about-stat reveal" style={{ transitionDelay: `${i * 0.1}s` }}>
+              <div className="about-stat-number">{s.number}</div>
+              <div className="about-stat-label">{s.label}</div>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="about-cta">
-        <h2>Ready to Start Your Financial Journey?</h2>
-        <p>Join thousands of Indians making smarter money decisions with FinBud AI</p>
-        <a href="/chat" className="cta-button">Start Chatting Now</a>
+      {/* ── CTA ──────────────────────────────────────────── */}
+      <section className="about-cta-section">
+        <div className="about-cta-grain" />
+        <div className="about-cta-inner reveal">
+          <h2>Ready to Start Your Financial Journey?</h2>
+          <p>Join thousands of Indians making smarter money decisions with FinBud AI</p>
+          <Link to="/chat" className="about-cta-btn">
+            Start Chatting Now <ArrowRight size={18} />
+          </Link>
+        </div>
       </section>
+
     </div>
   )
 }
