@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Target, Users, Zap, Shield, Heart, Award, ArrowRight } from 'lucide-react'
+import { Target, Users, Zap, Shield, Heart, Award, ArrowRight,BrainCircuit} from 'lucide-react'
 import { Link } from 'react-router-dom'
 import './about.css'
 
@@ -26,7 +26,7 @@ function About() {
     { icon: <Zap />, title: 'Instant Answers', body: 'No appointments, no waiting. Get expert-level answers to your financial questions in seconds, any time.', color: '#2d6a42' },
     { icon: <Heart />, title: 'Indian Context', body: 'Built specifically for Indian users with deep knowledge of PPF, EPF, NPS, ELSS, and Indian income tax laws.', color: '#3a8a55' },
     { icon: <Award />, title: 'Quality First', body: 'Trained on verified Indian financial knowledge to provide accurate, reliable, and up-to-date information.', color: '#52a86e' },
-    { icon: <Zap />, title: 'Continuous Learning', body: 'Our AI improves with every interaction, staying current with the latest financial regulations and market trends.', color: '#c9a84c' },
+    { icon: <BrainCircuit />, title: 'Continuous Learning', body: 'Our AI improves with every interaction, staying current with the latest financial regulations and market trends.', color: '#29aa36' },
   ]
 
   const steps = [

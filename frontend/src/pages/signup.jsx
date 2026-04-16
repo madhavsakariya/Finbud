@@ -270,27 +270,27 @@ function Signup() {
         </div>
 
         <div className="auth-showcase">
-          <h2>Join Thousands of Smart Investors</h2>
+          <h2>Join Thousands of Smart Indian Investors</h2>
           <ul className="showcase-features">
             <li>
               <span className="feature-icon">🎯</span>
               <div>
-                <h3>Personalized Goals</h3>
-                <p>Set and track your financial objectives</p>
+                <h3>Goal-Based Planning</h3>
+                <p>Set financial goals — home, education, retirement — and get a personalised roadmap to achieve them.</p>
               </div>
             </li>
             <li>
               <span className="feature-icon">📈</span>
               <div>
-                <h3>Investment Insights</h3>
-                <p>AI-powered market analysis</p>
+                <h3>Tax Saving Guidance</h3>
+                <p>Maximise your 80C, 80D, and NPS deductions. Know exactly how much tax you can legally save.</p>
               </div>
             </li>
             <li>
               <span className="feature-icon">💼</span>
               <div>
-                <h3>Portfolio Management</h3>
-                <p>Optimize your investments</p>
+                <h3>Always Free</h3>
+                <p>No subscriptions, no hidden fees. Professional-level Indian financial guidance at zero cost.</p>
               </div>
             </li>
           </ul>

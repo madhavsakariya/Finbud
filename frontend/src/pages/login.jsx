@@ -288,27 +288,27 @@ function Login() {
         </div>
 
         <div className="auth-showcase">
-          <h2>Your Smart Finance Companion</h2>
+          <h2>India's Smartest Finance Companion</h2>
           <ul className="showcase-features">
             <li>
               <span className="feature-icon">💡</span>
               <div>
-                <h3>AI-Powered Advice</h3>
-                <p>Get personalized financial guidance</p>
+                <h3>AI-Powered Indian Finance</h3>
+                <p>Expert guidance on PPF, ELSS, NPS, Section 80C, and all Indian tax laws — free and instant.</p>
               </div>
             </li>
             <li>
               <span className="feature-icon">📊</span>
               <div>
-                <h3>Smart Analytics</h3>
-                <p>Track your financial goals</p>
+                <h3>Smart Calculators</h3>
+                <p>SIP returns, loan EMI, retirement corpus — all built for ₹ and Indian interest rates.</p>
               </div>
             </li>
             <li>
               <span className="feature-icon">🔒</span>
               <div>
                 <h3>Secure & Private</h3>
-                <p>Your data is protected</p>
+                <p>Your data stays safe. No ads, no product pushing — just honest financial guidance.</p>
               </div>
             </li>
           </ul>
