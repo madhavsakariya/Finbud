@@ -1,16 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600&display=swap');
 
 .navbar {
-  position: sticky; top: 0; z-index: 100;
-  background: rgba(10, 26, 15, 0.92);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(58,138,85,0.2);
-  transition: all 0.3s ease;
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+width: 100%;
+z-index: 1000;
+background-color: #0a1a0f;
+border-bottom: 1px solid rgba(58, 138, 85, 0.35);
+backdrop-filter: none;
+transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
 .navbar.scrolled {
-  background: rgba(10, 26, 15, 0.98);
-  box-shadow: 0 4px 30px rgba(0,0,0,0.3);
-  border-bottom-color: rgba(58,138,85,0.35);
+background-color: #0a1a0f;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+border-bottom-color: rgba(58, 138, 85, 0.45);
 }
 
 .navbar-inner {
